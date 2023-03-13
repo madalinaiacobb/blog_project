@@ -1,6 +1,25 @@
 import { Card, CardBody, CardTitle, CardText, Button, Col } from "reactstrap";
 
 function BlogComponent({ blog }) {
+	const addToWishlist = () => {
+		const blogsString = localStorage.getItem("bloguri");
+		if (blogsString !== null) {
+			const blogs = JSON.parse(blogsString);
+
+			const existNr = blogs.find((blogElement) => {
+				return blogElement.id === blog.id;
+			});
+			console.log(existNr);
+			if (existNr === undefined) {
+				blogs.push(blog);
+			}
+			localStorage.setItem("bloguri", JSON.stringify(blogs));
+		} else {
+			const newBlogs = [];
+			newBlogs.push(blog);
+			localStorage.setItem("bloguri", JSON.stringify(newBlogs));
+		}
+	};
 	return (
 		<Col className='mt-4'>
 			<Card>
@@ -12,7 +31,12 @@ function BlogComponent({ blog }) {
 					<CardTitle tag='h5'>{blog.title}</CardTitle>
 					<CardText>{blog.body}</CardText>
 					<h6>{blog.userId}</h6>
-					<Button>Add to favourite!</Button>
+					<Button
+						onClick={() => {
+							addToWishlist();
+						}}>
+						Add to favourite!
+					</Button>
 				</CardBody>
 			</Card>
 		</Col>

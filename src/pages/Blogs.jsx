@@ -67,8 +67,8 @@ function Blogs() {
 								})
 								.filter((blog) => {
 									return (
-										blog.body.includes(textInput) ||
-										blog.title.includes(textInput)
+										blog.body.toLowerCase().includes(textInput.toLowerCase()) ||
+										blog.title.toLowerCase().includes(textInput.toLowerCase())
 									);
 								})
 								.map((blog, index) => {
